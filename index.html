@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Travel App</title>
+    <style>
+      .card {
+        border: 10px solid red;
+        margin: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2
+      style="
+        text-align: center;
+        background-color: bisque;
+        padding: 20px;
+        margin: 0px;
+      "
+    >
+      The Fighter
+    </h2>
+    <div
+      style="
+        display: flex;
+        justify-content: center;
+        gap: 2%;
+        background-color: rgb(157, 242, 242);
+        padding: 8px;
+      "
+    >
+      <input type="text" placeholder="Name" id="name" />
+      <input type="text" placeholder="Origin" id="origin" />
+      <input type="text" placeholder="Destination" id="destination" />
+      <input type="number" placeholder="Price" id="price" />
+      <input type="number" placeholder="Rating" id="rating" />
+      <button onclick="addItem()">Add Item</button>
+    </div>
+    <div
+      style="
+        background-color: brown;
+        color: white;
+        padding: 10px;
+        display: flex;
+        justify-content: space-around;
+      "
+    >
+      <button
+        onclick="sortByPrice()"
+        style="
+          background-color: transparent;
+          border: 1px solid rgb(243, 51, 99);
+          font-size: 20px;
+          cursor: pointer;
+        "
+      >
+        Sort by Price
+      </button>
+      <button
+        onclick="sortByRating()"
+        style="
+          background-color: transparent;
+          border: 1px solid rgb(243, 51, 99);
+          font-size: 20px;
+          cursor: pointer;
+        "
+      >
+        Sort by Rating
+      </button>
+    </div>
+    <div style="background-color: aliceblue" id="root">
+      <div class="card">
+        <ul>
+          <li>Name: Ajay</li>
+          <li>Origin to Destination</li>
+          <li>Price: 1000</li>
+          <li>Rating:5</li>
+        </ul>
+      </div>
+      <div class="card">
+        <ul>
+          <li>Name: Ajay</li>
+          <li>Origin to Destination</li>
+          <li>Price: 1000</li>
+          <li>Rating:5</li>
+        </ul>
+      </div>
+    </div>
+    <script>
+      const items = [];
+      let item1 = {
+        name: "Srikanth",
+        origin: "Khamman",
+        destination: "Basar",
+        price: 899,
+        rating: 4,
+      };
+      let item2 = {
+        name: "Rakesh",
+        origin: "Jagtial",
+        destination: "Hyderabad",
+        price: 999,
+        rating: 3,
+      };
+      items.push(item1);
+      items.push(item2);
+      function sortByPrice() {
+        items.sort(function (a, b) {
+          return a.price - b.price;
+        });
+        renderItems();
+      }
+      function sortByRating() {
+        items.sort(function (a, b) {
+          return a.rating - b.rating;
+        });
+        renderItems();
+      }
+      function addItem() {
+        let ne = document.getElementById("name");
+        let oe = document.getElementById("origin");
+        let de = document.getElementById("destination");
+        let pe = document.getElementById("price");
+        let re = document.getElementById("rating");
+        const item = {
+          name: ne.value,
+          origin: oe.value,
+          destination: de.value,
+          price: parseInt(pe.value),
+          rating: parseInt(re.value),
+        };
+        items.push(item);
+        ne.value = oe.value = de.value = pe.value = re.value = "";
+        renderItems();
+      }
+      function renderItems() {
+        let root = document.getElementById("root");
+        root.innerHTML = "";
+        for (let i = 0; i < items.length; i++) {
+          root.appendChild(getChild(items[i]));
+        }
+      }
+      function getChild(item) {
+        const child = document.createElement("div");
+        child.classList.add("card");
+        const list = createList(item);
+        child.appendChild(list);
+        return child;
+      }
+      function createList(item) {
+        const list = document.createElement("ul");
+        const name = document.createElement("li");
+        const place = document.createElement("li");
+        const price = document.createElement("li");
+        const rating = document.createElement("li");
+        name.innerHTML = `Name: ${item.name}`;
+        place.innerHTML = `Journey: ${item.origin} to ${item.destination}`;
+        price.innerHTML = `Price: ${item.price}`;
+        rating.innerHTML = `Rating: ${item.rating}`;
+        list.appendChild(name);
+        list.appendChild(place);
+        list.appendChild(price);
+        list.appendChild(rating);
+        return list;
+      }
+      renderItems();
+    </script>
+  </body>
+</html>
